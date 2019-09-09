@@ -1,0 +1,43 @@
+Welcome to Adam Zidek's Off File to Javascript Program!
+
+To build the program, I have included a makefile!
+    Simply type make and an executable will be created!
+
+This Program uses command lin arguments to run, which include the following:
+
+-modelName 'arbitrary name'         //This will assign the model name to the user entered name
+                                    //If no name is entered, the default value of 'CubeModel' will be given.
+                                    
+To pipe input and output files to the program, use the default < and > to direct data.
+
+If no pipes are used, the program will default to regular cin and cout streams.
+
+An example run of the program will show as follows:
+    ./off2js -modelName CubeModel < cube.off > cube.js
+    
+For this to work, the file 'cube.off' must exist. Cube.js will be created afer execution.
+
+//**************************************************************************************************//
+
+A few steps went into accomplishing the scaling of the model.
+
+First I had to calculate the minimum value of the x, y, and z coordinates. These min values then get inverted, and added to each x, y, and z.
+                    For all points x, y, and z
+                        Xn = Xn + -minX
+                        Yn = Yn + -minY
+                        Zn = Zn + -minZ
+
+This is done so that the smallest value of x, y, and z will be 0. 
+
+The max of all coordinate values is then calculated, it is important that this is done after adding the inverted min. Once the max is calcuated, each x, y, z is divided by this max value. 
+
+                    For all porints x, y, and z
+                        Xn = Xn / MAX
+                        Yn = Yn / MAX
+                        Zn = Zn / MAX
+
+This simply scales the model down by the largest dimension.
+
+Finally, .5 should be subtracted by each x, y, and z coordinate. Prior to subtracting .5, the coordinates are between 0 and 1, subtracting this value puts the values between -.5, and .5. This results in a properly scaled model.
+
+    
